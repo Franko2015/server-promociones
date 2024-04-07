@@ -2,32 +2,17 @@ import { createPool } from "mysql2/promise";
 import { config } from "dotenv";
 config();
 
-// Configuración de desarrollo
-const desarrollo = {
-  host: process.env.DEV_HOST,
-  user: process.env.DEV_USER,
-  password: process.env.DEV_PASS,
-  port: process.env.DEV_PORT,
-  database: process.env.DEV_BD,
-};
+const PORT = process.env.PORT_API || 4000;
+const DB_HOST = process.env.HOST || 'localhost';
+const DB_USER = process.env.USER || 'root';
+const DB_PASS = process.env.PASS || '';
+const DB_NAME = process.env.BD || 'promocionesdb';
+const DB_PORT = process.env.PORT || 3306;
 
-// Configuración de producción
-const produccion = {
-  host: process.env.HOST,
-  user: process.env.USER,
-  password: process.env.PASS,
-  port: process.env.PORT,
-  database: process.env.BD,
-};
-
-// Función para obtener la configuración según el entorno
-const getConfig = () => {
-  if (process.env.NODE_ENV === "production") {
-    return produccion;
-  } else {
-    return desarrollo;
-  }
-};
-
-// Crear el pool de conexiones usando la configuración correspondiente
-export const pool = createPool(getConfig());
+export const pool = createPool({
+  host: DB_HOST,
+  user: DB_USER,
+  password:  DB_PASS,
+  port: DB_PORT,
+  database: DB_NAME,
+});
