@@ -21,11 +21,13 @@ import { Usuario } from "./router/user.routes.js";
 import { Logs } from "./router/log.routes.js";
 import { Promocion } from "./router/promo.routes.js";
 import { Producto } from "./router/product.routes.js";
+import { Email } from "./router/email.routes.js";
 
 app.use(Usuario);
 app.use(Promocion);
 app.use(Producto);
 app.use(Logs);
+app.use(Email);
 
 // Establecer puerto y URL del servidor
 app.set("port", PORT);
