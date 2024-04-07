@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
   "author": "",
@@ -20,6 +21,7 @@
     "mysql2-promise": "^0.1.4"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.5.4"
+    "@flydotio/dockerfile": "^0.5.4",
+    "nodemon": "^3.1.0"
   }
 }

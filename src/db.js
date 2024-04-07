@@ -2,12 +2,11 @@ import { createPool } from "mysql2/promise";
 import { config } from "dotenv";
 config();
 
-const PORT = process.env.PORT_API || 4000;
-const DB_HOST = process.env.HOST || 'localhost';
-const DB_USER = process.env.USER || 'root';
-const DB_PASS = process.env.PASS || '';
-const DB_NAME = process.env.BD || 'promocionesdb';
-const DB_PORT = process.env.PORT || 3306;
+const DB_HOST = process.env.DB_HOST || 'localhost';
+const DB_USER = process.env.DB_USER || 'root';
+const DB_PASS = process.env.DB_PASS || '';
+const DB_NAME = process.env.DB_NAME || 'promocionesdb';
+const DB_PORT = process.env.DB_PORT || 3306;
 
 export const pool = createPool({
   host: DB_HOST,
