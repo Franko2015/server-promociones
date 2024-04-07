@@ -204,7 +204,7 @@ export const login = async (req, res) => {
                             `Ha iniciado sesión ${usuario}`
                         );
                         res.status(200).json({
-                            msg: `Usuario logueado correctamente: ${token}`,
+                            msg: `Usuario logueado correctamente`,
                             token,
                             user: resultado[0],
                         });

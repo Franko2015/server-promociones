@@ -55,7 +55,7 @@ export const validate = async (req, res) => {
     };
     try {
         const [rows] = await pool.query(
-            "UPDATE tblUsuario SET token = ? WHERE correo = ?",
+            "UPDATE tbl_usuarios SET token = ? WHERE correo = ?",
             [token, email]
         );
 
@@ -90,7 +90,7 @@ export const reset = async (req, res) => {
         // Assuming you have a column named 'password' in tblUsuario
         const passwordHashed = await bcrypt.hash(newPassword, 10);
         const resultado = await pool.query(
-            "UPDATE tblUsuario SET contrasena = ? WHERE token = ?",
+            "UPDATE tbl_usuarios SET contrasena = ? WHERE token = ?",
             [passwordHashed, token]
         );
 
@@ -110,7 +110,7 @@ export const reset = async (req, res) => {
 const isValidEmail = async (email) => {
     try {
         const [rows] = await pool.query(
-            "SELECT * FROM tblUsuario WHERE correo = ?",
+            "SELECT * FROM tbl_usuarios WHERE correo = ?",
             [email]
         );
         return rows.length > 0;
@@ -122,7 +122,7 @@ const isValidEmail = async (email) => {
 export const addToken = async (token, email) => {
     try {
         const [rows] = await pool.query(
-            "UPDATE tblUsuario SET token = ? WHERE correo = ?",
+            "UPDATE tbl_usuarios SET token = ? WHERE correo = ?",
             [token, email]
         );
 
