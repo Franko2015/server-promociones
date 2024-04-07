@@ -1,41 +1,49 @@
 import express from "express";
-const app = express();
 import morgan from "morgan";
 import cors from "cors";
+import { createPool } from "mysql2/promise";
+import { config } from "dotenv";
 
+// Cargar variables de entorno desde el archivo .env
+config();
+
+const app = express();
+const PORT = process.env.PORT || 4000;
+const URL = process.env.URL || 'http://localhost';
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(morgan("dev"));
+
+// Importar rutas
 import { Usuario } from "./router/user.routes.js";
 import { Logs } from "./router/log.routes.js";
 import { Promocion } from "./router/promo.routes.js";
 import { Producto } from "./router/product.routes.js";
-
-app.use(cors());
-app.use(express.json());
 
 app.use(Usuario);
 app.use(Promocion);
 app.use(Producto);
 app.use(Logs);
 
-app.get('/log', async (res, req) => {
-    try {
-        const [resultado] = await pool.query(`SELECT * FROM tbl_log ORDER BY id_log DESC`);
-        res.json(resultado);
-    } catch (error) {
-        res.json({ statusbar: "API RESTful" });
-    }
-})
-
-// settings
-app.set("port", process.env.PORT || 4000);
-app.set("server", process.env.URL || 'localhost');
+// Establecer puerto y URL del servidor
+app.set("port", PORT);
+app.set("server", URL);
 app.set("json spaces", 2);
 
-//middlewares
-app.use(morgan("dev"));
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-// starting the server
-app.listen(app.get("port"), () => {
-    console.log(`Servidor: ${app.get("server")}\nPuerto: ${app.get("port")}\nURL: http://${app.get("server") + ":" + app.get("port")}/api/`);
+// Crear pool de conexiones a la base de datos
+const pool = createPool({
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASS || '',
+    port: process.env.DB_PORT || 3306,
+    database: process.env.DB_NAME || 'promocionesdb',
 });
+
+// Iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`Servidor: ${URL}\nPuerto: ${PORT}\nURL: ${URL}:${PORT}/api/`);
+});
+
+export { pool };
