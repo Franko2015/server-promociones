@@ -18,5 +18,8 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.9.3",
     "mysql2-promise": "^0.1.4"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.4"
   }
 }

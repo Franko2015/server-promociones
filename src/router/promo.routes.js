@@ -21,4 +21,4 @@ router.put("/api/promociones/:id_promocion", validateToken, edit);
 // Create
 router.post("/api/promociones", validateToken, create);
 
-export const Usuario = router;
+export const Promocion = router;

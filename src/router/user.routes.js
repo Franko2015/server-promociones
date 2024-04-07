@@ -12,16 +12,16 @@ import validateToken from "../middleware/validate-token.js";
 const router = Router();
 
 // Get All
-router.get("/api/usuarios", getAll);
+router.get("/api/usuarios", validateToken, getAll);
 
 // Get One
-router.get("/api/usuarios/:id_usuario", getOne);
+router.get("/api/usuarios/:id_usuario", validateToken, getOne);
 
 // Update
-router.put("/api/usuarios/:id_usuario", edit);
+router.put("/api/usuarios/:id_usuario", validateToken, edit);
 
 // Change state
-router.put("/api/usuarios/state/:id_usuario", state);
+router.put("/api/usuarios/state/:id_usuario", validateToken, state);
 
 // Create
 router.post("/api/usuarios", create);

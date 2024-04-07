@@ -1,5 +1,5 @@
 import { pool } from "../db.js";
-import { postLog } from "./log.controller";
+import { postLog } from "./log.controller.js";
 
 const tabla = "tbl_promociones";
 const identificador = "id_promocion";
