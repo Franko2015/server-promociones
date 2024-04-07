@@ -134,13 +134,14 @@ export const create = async (req, res) => {
     const {
         usuario,
         contrasena,
-        permiso
+        permiso,
+        correo
     } = req.body;
 
     try {
         const [resultado] = await pool.query(
-            `SELECT * FROM ${tabla} WHERE usuario = ?`,
-            [usuario]
+            `SELECT * FROM ${tabla} WHERE usuario = ? or correo = ?`,
+            [usuario, correo]
         );
 
         if (resultado && resultado.length > 0) {
@@ -151,12 +152,13 @@ export const create = async (req, res) => {
             await pool.query(
                 `
                 INSERT INTO tbl_usuarios
-                (usuario, contrasena, permiso)
-                VALUES (?, ?, ?)`,
+                (usuario, contrasena, permiso, correo)
+                VALUES (?, ?, ?, ?)`,
                 [
                     usuario,
                     passwordHashed,
-                    permiso
+                    permiso,
+                    correo
                 ]
             );
 
@@ -226,7 +228,7 @@ export const login = async (req, res) => {
                 });
             }
         } else {
-            res.status(404).json({ msg: "El usuario no existe" });
+            res.status(404).json({ msg: `El usuario no existe` });
         }
     } catch (error) {
         await postLog(error, "Error en la BD");

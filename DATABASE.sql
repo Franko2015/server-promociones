@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS tbl_usuarios(
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(25) UNIQUE NOT NULL,
     contrasena CHAR(64) NOT NULL,
-    permiso ENUM ('SI', 'NO') NOT NULL
+    permiso ENUM ('SI', 'NO') NOT NULL,
+    correo VARCHAR(70) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tbl_log(
