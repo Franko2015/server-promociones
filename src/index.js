@@ -16,7 +16,15 @@ app.use(Promocion);
 app.use(Producto);
 app.use(Logs);
 
-app.get('/', (res, req)=> {
+app.get('/', async (res, req) => {
+    try {
+        const [resultado] = await pool.query(`SELECT * FROM tbl_log ORDER BY id_log DESC`);
+        res.json(resultado);
+        await postLog(`Consulta a tbl_log`, "Consulta SELECT");
+    } catch (error) {
+        await postLog(error, "Error en la BD");
+    }
+    
     res.json({ statusbar: "API RESTful" });
 })
 
