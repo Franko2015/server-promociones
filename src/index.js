@@ -22,7 +22,7 @@ app.get('/', (res, req)=> {
 
 // settings
 app.set("port", process.env.PORT_API || 4000);
-app.set("server", process.env.HOST || process.env.DEV_HOST);
+app.set("server", process.env.HOST || 'localhost');
 app.set("json spaces", 2);
 
 //middlewares
