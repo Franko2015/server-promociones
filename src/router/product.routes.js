@@ -4,6 +4,7 @@ import {
     getOne,
     edit,
     create,
+    showProduct
 } from "../controller/product.controller.js";
 import validateToken from "../middleware/validate-token.js";
 
