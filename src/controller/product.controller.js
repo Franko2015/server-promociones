@@ -126,3 +126,40 @@ export const create = async (req, res) => {
         });
     }
 };
+
+export const showProduct = async (req, res) => {
+    const { id_producto } = req.body;
+
+    try {
+        // Obtener el valor actual de mostrar
+        const [resultado] = await pool.query(
+            `SELECT mostrar FROM ${tabla} WHERE ${identificador} = ?`,
+            [id_producto]
+        );
+        const mostrarActual = resultado[0].mostrar;
+
+        // Invertir el valor de mostrar
+        const nuevoValorMostrar = mostrarActual === 1 ? 0 : 1;
+
+        // Actualizar el valor de mostrar en la base de datos
+        const [resultadoUpdate] = await pool.query(
+            `UPDATE ${tabla} SET mostrar = ? WHERE ${identificador} = ?`,
+            [nuevoValorMostrar, id_producto]
+        );
+
+        if (resultadoUpdate.affectedRows > 0) {
+            res.json({ msg: "Actualizado correctamente" });
+            await postLog(
+                `Consulta a ${tabla}`,
+                `Consulta UPDATE a la ${identificador} = ${id_producto}`
+            );
+        } else {
+            res.status(404).json({ msg: "No encontrado" });
+        }
+    } catch (error) {
+        await postLog(error, "Error en la BD");
+        res.status(500).json({
+            msg: "El servidor no se encuentra disponible. Intente más tarde.",
+        });
+    }
+}
