@@ -128,17 +128,12 @@ export const create = async (req, res) => {
 };
 
 export const showProduct = async (req, res) => {
-    const id_producto = req.params.id_producto;
+    const { id_producto } = req.params;
+    const { mostrar } = req.body;
 
     try {
-        // Obtener el valor actual de mostrar
-        const [resultado] = await pool.query(
-            `SELECT mostrar FROM ${tabla} WHERE ${identificador} = ?` [id_producto]
-        );
-        const mostrarActual = resultado[0].mostrar;
-
         // Invertir el valor de mostrar
-        const nuevoValorMostrar = mostrarActual === 1 ? 0 : 1;
+        const nuevoValorMostrar = mostrar === 1 ? 0 : 1;
 
         // Actualizar el valor de mostrar en la base de datos
         const [resultadoUpdate] = await pool.query(
@@ -162,4 +157,3 @@ export const showProduct = async (req, res) => {
         });
     }
 }
-
