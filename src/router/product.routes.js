@@ -4,7 +4,7 @@ import {
     getOne,
     edit,
     create,
-} from "../controller/promo.controller.js";
+} from "../controller/product.controller.js";
 import validateToken from "../middleware/validate-token.js";
 
 const router = Router();
