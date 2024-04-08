@@ -128,7 +128,7 @@ export const create = async (req, res) => {
 };
 
 export const showProduct = async (req, res) => {
-    const { id_producto } = req.body;
+    const { id_producto } = req.params;
 
     try {
         // Obtener el valor actual de mostrar
