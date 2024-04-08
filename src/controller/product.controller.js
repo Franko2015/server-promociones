@@ -128,13 +128,12 @@ export const create = async (req, res) => {
 };
 
 export const showProduct = async (req, res) => {
-    const { id_producto } = req.params;
+    const id_producto = req.params.id_producto;
 
     try {
         // Obtener el valor actual de mostrar
         const [resultado] = await pool.query(
-            `SELECT mostrar FROM ${tabla} WHERE ${identificador} = ?`,
-            [id_producto]
+            `SELECT mostrar FROM ${tabla} WHERE ${identificador} = ?` [id_producto]
         );
         const mostrarActual = resultado[0].mostrar;
 
@@ -163,3 +162,4 @@ export const showProduct = async (req, res) => {
         });
     }
 }
+
