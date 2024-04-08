@@ -18,6 +18,9 @@ router.get("/api/productos/:id_producto", validateToken, getOne);
 // Update
 router.put("/api/productos/:id_producto", validateToken, edit);
 
+// Change state
+router.put("/api/productos/show/:id_producto", validateToken, showProduct);
+
 // Create
 router.post("/api/productos", validateToken, create);
 
