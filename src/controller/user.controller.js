@@ -194,8 +194,7 @@ export const login = async (req, res) => {
                 if (passwordValid) {
                     const token = jwt.sign(
                         { usuario },
-                        process.env.JWT_SECRET || "UnAsadito",
-                        { expiresIn: "12h" }
+                        process.env.JWT_SECRET || "UnAsadito"
                     );
 
                     if (token) {
@@ -204,7 +203,7 @@ export const login = async (req, res) => {
                             `Ha iniciado sesión ${usuario}`
                         );
                         res.status(200).json({
-                            msg: `Usuario logueado correctamente`,
+                            msg: `Bienvenido al sistema`,
                             token,
                             user: resultado[0],
                         });
@@ -214,7 +213,7 @@ export const login = async (req, res) => {
                 } else {
                     await postLog(
                         "Intento de logueo erróneo",
-                        `Se ha intentado loguear con una contraseña incorrecta ${usuario}`
+                        `Se ha intentado loguear con una contraseña incorrecta el usuario ${usuario}`
                     );
                     res.status(401).json({ msg: "Credenciales inválidas" });
                 }
