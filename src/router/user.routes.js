@@ -12,7 +12,7 @@ import validateToken from "../middleware/validate-token.js";
 const router = Router();
 
 // Get All
-router.get("/api/usuarios", getAll);
+router.get("/api/usuarios", validateToken, getAll);
 
 // Get One
 router.get("/api/usuarios/:id_usuario", validateToken, getOne);

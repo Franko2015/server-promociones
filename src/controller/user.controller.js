@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
     try {
         const [resultado] = await pool.query(`SELECT * FROM ${tabla}`);
         res.json(resultado);
-        await postLog(`Consulta a ${tabla}`, "Consulta SELECT");
+        await postLog(`Consulta a tabla ${tabla}`, "Consulta SELECT a todos los usuarios correctamente.");
     } catch (error) {
         await postLog(error, "Error en la BD");
         res.status(500).json({
@@ -35,15 +35,15 @@ export const getOne = async (req, res) => {
 
             if (usuario.permiso === "NO") {
                 await postLog(
-                    `Consulta a ${tabla}`,
+                    `Consulta a tabla ${tabla}`,
                     `Usuario ${resultado.usuario} ha intentado ingresar`
                 );
-                res.status(401).json({ msg: "NO TIENE LOS PERMISOS PARA INGRESAR AL SISTEMA" });
+                res.status(401).json({ msg: "No tiene los permisos para ingresar." });
             } else {
                 res.status(201).json(usuario);
                 await postLog(
-                    `Consulta a ${tabla}`,
-                    `Consulta SELECT ONE a la ${tabla} = ${resultado.usuario}`
+                    `Consulta a tabla ${tabla}`,
+                    `Consulta SELECT al usuario ${resultado.usuario} correctamente.`
                 );
             }
         } else {
@@ -88,10 +88,10 @@ export const edit = async (req, res) => {
             );
 
             if (resultado.affectedRows > 0) {
-                res.json({ msg: "Actualizado correctamente" });
+                res.json({ msg: "Se ha actualizado el usuario correctamente." });
                 await postLog(
-                    `Consulta a ${tabla}`,
-                    `Consulta UPDATE a la ${identificador} = ${resultado.usuario}`
+                    `Consulta a tabla ${tabla}`,
+                    `Se ha modificado al usuario ${resultado.usuario} correctamente.`
                 );
             } else {
                 res.status(404).json({ msg: "No encontrado" });
@@ -116,8 +116,8 @@ export const state = async (req, res) => {
         );
 
         if (resultado.affectedRows > 0) {
-            res.json({ msg: "Estado de usuario actualizado correctamente" });
-            await postLog(`Consulta a ${tabla}`, `Suspensión de cuenta a ${id_usuario}`);
+            res.json({ msg: "Estado de usuario actualizado correctamente." });
+            await postLog(`Consulta a tabla ${tabla}`, `Suspensión de cuenta a ${id_usuario} correctamente.`);
         } else {
             res.status(404).json({ msg: "Usuario no encontrado" });
         }
@@ -163,10 +163,10 @@ export const create = async (req, res) => {
             );
 
             await postLog(
-                `Create de usuario ${usuario}`,
-                `Usuario ${usuario} creado correctamente`
+                `Consulta a tabla ${tabla}`,
+                `Se ha creado al usuario ${usuario} correctamente`
             );
-            res.status(201).json({ msg: "Usuario creado correctamente" });
+            res.status(201).json({ msg: "Usuario creado correctamente." });
         }
     } catch (error) {
         await postLog(error, "Error en la BD");
@@ -208,19 +208,19 @@ export const login = async (req, res) => {
                             user: resultado[0],
                         });
                     } else {
-                        res.status(500).json({ msg: "Error al generar el token" });
+                        res.status(500).json({ msg: "Error al generar el token." });
                     }
                 } else {
                     await postLog(
-                        "Intento de logueo erróneo",
+                        `Consulta a tabla ${tabla}`,
                         `Se ha intentado loguear con una contraseña incorrecta el usuario ${usuario}`
                     );
-                    res.status(401).json({ msg: "Credenciales inválidas" });
+                    res.status(401).json({ msg: "Credenciales inválidas." });
                 }
             } else {
                 await postLog(
-                    "Usuario INACTIVO intenta logueo",
-                    `Se ha intentado loguear con una cuenta suspendida: ${usuario}`
+                    `Consulta a tabla ${tabla}`,
+                    `Se ha intentado loguear con una cuenta suspendida el usuario ${usuario}`
                 );
                 res.status(401).json({
                     msg: "Su cuenta está suspendida. Llame a administración si tiene consultas.",

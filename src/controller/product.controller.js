@@ -44,17 +44,19 @@ export const edit = async (req, res) => {
         precio_antes,
         precio_ahora,
         imagen,
+        tiempo,
         mostrar
     } = req.body;
 
     try {
         const [resultado] = await pool.query(
-            `UPDATE ${tabla} SET descripcion = ?, precio_antes = ?, precio_ahora = ?, imagen = ?, mostrar = ? WHERE ${identificador} = ?`,
+            `UPDATE ${tabla} SET descripcion = ?, precio_antes = ?, precio_ahora = ?, imagen = ?, tiempo = ? , mostrar = ? WHERE ${identificador} = ?`,
             [
                 descripcion,
                 precio_antes,
                 precio_ahora,
                 imagen,
+                tiempo,
                 mostrar,
                 id_producto
             ]
@@ -63,7 +65,7 @@ export const edit = async (req, res) => {
         if (resultado.affectedRows > 0) {
             res.json({ msg: "Actualizado correctamente" });
             await postLog(
-                `Consulta a ${tabla}`,
+                `Consulta a tabla ${tabla}`,
                 `Consulta UPDATE a la ${identificador} = ${id_producto}`
             );
         } else {
@@ -83,6 +85,7 @@ export const create = async (req, res) => {
         precio_antes,
         precio_ahora,
         imagen,
+        tiempo,
         mostrar
     } = req.body;
 
@@ -100,20 +103,21 @@ export const create = async (req, res) => {
             await pool.query(
                 `
                 INSERT INTO tbl_productos
-                (descripcion, precio_antes, precio_ahora, imagen, mostrar)
-                VALUES (?, ?, ?, ?, ?)`,
+                (descripcion, precio_antes, precio_ahora, imagen, tiempo, mostrar)
+                VALUES (?, ?, ?, ?, ?, ?)`,
                 [
                     descripcion,
                     precio_antes,
                     precio_ahora,
                     imagen,
+                    tiempo * 1000,
                     mostrar
                 ]
             );
 
             // Registrar el evento en el log
             await postLog(
-                `Nuevo producto creado`,
+                `Consulta a tabla ${tabla}`,
                 `Producto "${descripcion}" creado correctamente`
             );
             res.status(201).json({ msg: "Producto creado correctamente" });
@@ -142,9 +146,13 @@ export const showProduct = async (req, res) => {
         );
 
         if (resultadoUpdate.affectedRows > 0) {
-            res.json({ msg: "Actualizado correctamente" });
+            if (nuevoValorMostrar == 0){
+                res.json({ msg: `Producto se ha quitado de la vista de pantalla` });
+            }else {
+                res.json({ msg: `Producto se ha agregado a la vista de pantalla` });
+            }
             await postLog(
-                `Consulta a ${tabla}`,
+                `Consulta a tabla ${tabla}`,
                 `Consulta UPDATE a la ${identificador} = ${id_producto}`
             );
         } else {
