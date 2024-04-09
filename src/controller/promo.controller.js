@@ -50,7 +50,7 @@ export const edit = async (req, res) => {
   const { id_grupo, id_producto, precio } = req.body;
   try {
     const [resultado] = await pool.query(
-      `UPDATE ${tabla} SET nombre =?, descripcion =?, precio =?, imagen=? WHERE ${identificador} = ?`,
+      `UPDATE ${tabla} SET nombre =?, descripcion =?, precio =?, imagen=?, tiempo=? WHERE ${identificador} = ?`,
       [id_grupo, id_producto, precio, imagen, id_promocion]
     );
     res.json({msg: `Se ha modificado la promoción ${id_promocion} correctamente.`});
@@ -61,11 +61,11 @@ export const edit = async (req, res) => {
 };
 
 export const create = async (req, res) => {
-  const { id_grupo, id_producto, precio, imagen } = req.body;
+  const { id_grupo, id_producto, precio, imagen, tiempo } = req.body;
   try {
     const [resultado] = await pool.query(
-      `INSERT INTO ${tabla} (id_grupo, id_producto, precio, imagen) VALUES (?, ?, ?, ?)`,
-      [id_grupo, id_producto, precio, imagen]
+      `INSERT INTO ${tabla} (id_grupo, id_producto, precio, imagen, tiempo) VALUES (?, ?, ?, ?, ?)`,
+      [id_grupo, id_producto, precio, imagen, tiempo]
     );
     res.json({ msg: `Se ha creado la promoción correctamente.` });
     await postLog(`Consulta a tabla ${tabla}`, `Creacion de la promoción con grupo ${id_grupo} correctamente.`);
