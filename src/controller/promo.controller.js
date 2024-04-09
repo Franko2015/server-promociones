@@ -41,6 +41,9 @@ export const getOne = async (req, res) => {
     res.json(resultado);
     await postLog(`Consulta a tabla ${tabla}`, `Consulta SELECT a la promoción ${id_promocion} correctamente.`);
   } catch (error) {
+    res.status(500).json({
+      msg: "Error en la consulta. Intente más tarde.",
+    });
     await postLog(error, "Error en la BD");
   }
 };
@@ -56,6 +59,9 @@ export const edit = async (req, res) => {
     res.json({msg: `Se ha modificado la promoción ${id_promocion} correctamente.`});
     await postLog(`Consulta a tabla ${tabla}`, `Modificacion a la promoción ${id_promocion} correctamente.`);
   } catch (error) {
+    res.status(500).json({
+      msg: "Error en la consulta. Intente más tarde.",
+    });
     await postLog(error, "Error en la BD");
   }
 };
@@ -70,6 +76,9 @@ export const create = async (req, res) => {
     res.json({ msg: `Se ha creado la promoción correctamente.` });
     await postLog(`Consulta a tabla ${tabla}`, `Creacion de la promoción con grupo ${id_grupo} correctamente.`);
   } catch (error) {
+    res.status(500).json({
+      msg: "Error en la consulta. Intente más tarde.",
+    });
     await postLog(error, "Error en la BD");
   }
 };
@@ -84,6 +93,9 @@ export const deleteOne = async (req, res) => {
     res.json({ msg: `Se ha eliminado la promoción ${id_promocion} correctamente.` });
     await postLog(`Consulta a tabla ${tabla}`, `Eliminacion de la promoción ${id_promocion} correctamente.`);
   } catch (error) {
+    res.status(500).json({
+      msg: "Error en la consulta. Intente más tarde.",
+    });
     await postLog(error, "Error en la BD");
   }
 };
